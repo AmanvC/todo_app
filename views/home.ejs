@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/home.css">
+    <title><%= title %></title>
+</head>
+<body>
+    <div class="todo-container">
+        <div class="heading">
+            <h1><%= title %></h1>
+        </div>
+        <form action="/create-todo" method="POST">
+            <div class="task-details">
+                <p>DESCRIPTION</p>
+                <input type="text" name="todo" placeholder="What do you need to do?" required>
+            </div>
+            <div class="options">
+                <div class="todo-category">
+                    <p>CATEGORY</p>
+                    <select name="category">
+                        <% for(let i of category){ %>
+                            <option value=<%= i %>><%= i %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="due-date">
+                    <p>DUE DATE</p>
+                    <input type="date" name="due_date">
+                </div>
+            </div>
+            <div class="task-buttons">
+                <button class="add-task" type="submit">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>ADD TASK</span>
+                </button>
+                <a href="" class="delete-task">
+                    <i class="fa-sharp fa-solid fa-trash"></i>
+                    <span>DELETE TASK</span>
+                </a>
+            </div>
+        </form>
+        <div class="pending">
+            <span>Pending todos: </span>
+            <span class="count"></span>
+        </div>
+        <div class="tasks-list">
+            <ul>
+                <% for(let j of todo_list){ %>
+                    <li>
+                        <div class="wrapper <%= j._id %>">
+                            <input type="checkbox" name=<%= j._id %>>
+                            <div class="todo-details">
+                                <p><%= j.todo %></p>
+                                <p>
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    <% if(!j.due_date){ %>
+                                    <span>No due date</span>
+                                    <% }else{ %>
+                                    <span><%= j.due_date %></span>
+                                    <% } %>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="todo-category">
+                            <% if (j.category !== "Choose"){ %>
+                            <span style="background: <%= j.color %>"><%= j.category %></span>
+                            <% } %>
+                        </div>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+
+    <script src="./js/home.js"></script>
+</body>
+</html>
