@@ -12,8 +12,11 @@ router.get('/', homeController.home);
 //navigate to create-todo
 router.post('/create-todo', homeController.createTodo);
 
-//delete selected tasks
-router.get('/delete-todos/', homeController.deleteTodos);
+//delete selected todos
+router.get('/delete-todos', homeController.deleteTodos);
+
+//filter todos according to category
+router.get('/filter', homeController.filterTodos)
 
 //export the router
 module.exports = router;

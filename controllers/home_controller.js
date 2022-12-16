@@ -1,5 +1,8 @@
 let categories = ["Choose a category", "Personal", "Work", "School", "Cleaning", "Others"];
 
+let filter_categories = ["Choose a category", "All", "Personal", "Work", "School", "Cleaning", "Others"];
+
+
 //get the schema model
 const Todo = require('../models/todo');
 
@@ -40,7 +43,8 @@ module.exports.home = function(req, res){
         return res.render('home', {
             title: "TODO App",
             category: categories,
-            todo_list: todo_list
+            todo_list: todo_list,
+            filter_categories: filter_categories
         })
     })
 }
@@ -49,18 +53,18 @@ module.exports.home = function(req, res){
 module.exports.createTodo = function(req, res){
     const obj = req.body;
     let color = '';
-    let selectedCategory = obj.category;
+    let selectedCategory = obj.category[0];
     let key = colors.find(x => x.option == selectedCategory);
     color = key.color;
     obj.due_date = getFormattedDate(obj.due_date);
     Todo.create({
         todo: obj.todo,
         due_date: obj.due_date,
-        category: obj.category,
+        category: obj.category[0],
         color: color
     }, function(err, newTodo){
         if(err){
-            console.log("Todo cannot be added");
+            console.log("Todo cannot be added"+err);
             return;
         }
         return res.redirect('back');
@@ -101,4 +105,38 @@ module.exports.deleteTodos = function(req, res){
     setTimeout(() => {
         return res.redirect('back');
     }, 100);
+}
+
+//filter tasks according to the category
+module.exports.filterTodos = function(req, res){
+    let category = req.query.category;
+    console.log(category);
+    let script;
+    if(category == 'All'){
+        script = {}
+    }else{
+        script = {category:category};
+    }
+    Todo.find(script, function(err, filtered_todos){
+        // console.log(filtered_todos)
+        if(err){
+            console.log(`Error occured in filtering the todos: ${err}`);
+            return;
+        }
+        // return res.send(filtered_todos);
+
+        // return res.redirect('/',{
+        //     title: "TODO App",
+        //     category: categories,
+        //     filter_categories: filter_categories,
+        //     todo_list: filtered_todos
+        // });
+
+        return res.render('home', {
+            title: "TODO App",
+            category: categories,
+            filter_categories: filter_categories,
+            todo_list: filtered_todos
+        })
+    })
 }

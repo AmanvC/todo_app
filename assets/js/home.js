@@ -1,11 +1,11 @@
 let todos = document.querySelectorAll("input[type=checkbox]");
 
-let totalTodods = todos.length;
+let totalTodos = todos.length;
 let pendingTodosElement = document.querySelector('.count');
-if(totalTodods === 0){
+if(totalTodos === 0){
     pendingTodosElement.innerHTML = "All set, you don't have any tasks to do. Enjoy!";
 }else{
-    pendingTodosElement.innerHTML = totalTodods;
+    pendingTodosElement.innerHTML = totalTodos;
 }
 
 let checkedTodos = [];
@@ -37,8 +37,20 @@ deleteButton.addEventListener('click', () => {
         redirectedURL += `id=${x}&`;
     })
     deleteButton.href = redirectedURL;
-    totalTodods -= checkedTodos.length;
-    pendingTodosElement.innerHTML = totalTodods
+    totalTodos -= checkedTodos.length;
+    pendingTodosElement.innerHTML = totalTodos
 })
 
-
+//pass the filtered category to the home controller
+let filterMenu = document.querySelector('.filter select');
+let searchButton = document.querySelector('.search');
+filterMenu.addEventListener('change', () => {
+    let filterMenuValue = filterMenu.value;
+    searchButton.href = `/filter/?category=${filterMenuValue}`;
+    console.log(searchButton.href)
+    // if(filterMenuValue == 'All'){
+    //     searchButton.href = "/";
+    // }else{
+    //     searchButton.href = `/filter/?category=${filterMenuValue}`;
+    // }
+})

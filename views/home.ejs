@@ -41,6 +41,14 @@
                     <i class="fa-sharp fa-solid fa-trash"></i>
                     <span>DELETE TASK</span>
                 </a>
+                <div class="filter">
+                    <select name="category">
+                        <% for(let i of filter_categories){ %>
+                            <option value=<%= i %>><%= i %></option>
+                        <% } %>
+                    </select>
+                    <a href="" class="search"><i class="fa-solid fa-magnifying-glass"></i></a>
+                </div>
             </div>
         </form>
         <div class="pending">

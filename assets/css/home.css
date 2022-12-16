@@ -109,6 +109,7 @@ select option{
 .task-buttons{
     padding: 20px;
     width: 100%;
+    gap: 5px;
     display: flex;
     justify-content: center;
 }
@@ -119,11 +120,10 @@ select option{
     width: 150px;
     height: 50px;
     border: none;
-    margin-right: 5px;
     cursor: pointer;
 }
 
-.task-buttons a{
+.task-buttons a.delete-task{
     text-decoration: none;
     color: white;
     width: 150px;
@@ -202,4 +202,23 @@ ul li:nth-child(1){
 
 .checked{
     text-decoration: line-through;
+}
+
+.filter{
+    width: 200px;
+    height: 50px;
+    background-color: seagreen;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.filter select{
+    width: 80%;
+}
+
+.filter a{
+    text-decoration: none;
+    color: white
 }
